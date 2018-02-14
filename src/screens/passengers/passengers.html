@@ -111,7 +111,7 @@
 															ng-model="passenger.lastName"
                                                             ng-blur="vm.lastNameBlurHandler(passengerNumber)"
 															required
-															ng-pattern="vm.passengersCheck.passengerLastNameRegexp"
+															ng-pattern=" (passenger.documentType == 'PSP') ? vm.passengerLastNameLatRegexp : vm.passengersCheck.passengerLastNameRegexp "
 															class="textInp inp-animate-placeholder"
 															error-highlight="{{vm.submitTouched}}">
 														<label class="inp-animate-label">
@@ -130,7 +130,7 @@
 															ng-model="passenger.firstName"
                                                             ng-blur="vm.firstNameBlurHandler(passengerNumber)"
 															required
-															ng-pattern="vm.passengersCheck.passengerFirstNameRegexp"
+															ng-pattern=" (passenger.documentType == 'PSP') ? vm.passengerFirstNameLatRegexp : vm.passengersCheck.passengerFirstNameRegexp "
 															class="textInp inp-animate-placeholder"
 															error-highlight="{{vm.submitTouched}}">
 														<label class="inp-animate-label">
@@ -533,7 +533,7 @@
 
                         <div ng-if="vm.errorMessage" class="infoMessage infoMessage_error">
         					<div class="infoMessage__i">
-        						<p>{{ vm.errorMessage | aliasDynamic }}</p>
+        						<p ng-bind-html=" vm.errorMessage | aliasDynamic "></p>
         					</div>
         				</div>
 
