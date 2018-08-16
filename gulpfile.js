@@ -26,7 +26,7 @@
                     return url.replace('src/', '');
                 }
             }))
-            .pipe(concat("templates-nordstar.js"))
+            .pipe(concat("templates-nordstar-test.js"))
             .pipe(uglify())
             .pipe(gulp.dest('build/'));
     });
