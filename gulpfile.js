@@ -1,13 +1,19 @@
 (function() {
 
     var gulp = require('gulp'),
+        sourcemaps = require('gulp-sourcemaps'),
+        browserify = require('browserify'),
+        strictify = require('strictify'),
+        sass = require('gulp-sass'),
         del = require('del'),
         ngHtml2Js = require('gulp-ng-html2js'),
         minifyHtml = require('gulp-minify-html'),
         uglify = require('gulp-uglify'),
         concat = require('gulp-concat'),
         stylus = require('gulp-stylus'),
-        autoprefixer = require('autoprefixer-stylus');
+        autoprefixer = require('gulp-autoprefixer'),
+        source = require('vinyl-source-stream'),
+        buffer = require('vinyl-buffer');
 
     gulp.task('clean', function() {
         return del('build');
@@ -31,12 +37,35 @@
             .pipe(gulp.dest('build/'));
     });
 
-
-    gulp.task('watch', function() {
-        gulp.watch('src/**/*.*', gulp.series('build:html'));
+    gulp.task('build:css', function(){
+        return gulp.src('src/css/**/*.sass')
+            .pipe(sourcemaps.init())
+            .pipe(sass().on('error', sass.logError))
+            .pipe(autoprefixer({
+                browsers: ['last 5 versions'],
+                cascade: false
+            }))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest('build/index.css/'));
     });
 
-    gulp.task('build', gulp.series('build:html'));
+    gulp.task('build:js', function () {
+        return browserify('src/index.js', { transform: strictify })
+            .bundle()
+            .pipe(source('controllers-nordstar-test.js'))
+            .pipe(buffer())
+            .pipe(sourcemaps.init({loadMaps: true}))
+            .pipe(uglify())
+            .pipe(sourcemaps.write('./'))
+            .pipe(gulp.dest('build/'));
+    });
+
+
+    gulp.task('watch', function() {
+        gulp.watch('src/**/*.*', gulp.series('build:html', 'build:css', 'build:js'));
+    });
+
+    gulp.task('build', gulp.series('build:html', 'build:css', 'build:js'));
 
     gulp.task('default', gulp.series('build', 'watch'));
 

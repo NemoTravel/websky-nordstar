@@ -120,7 +120,8 @@
                                             <a href ng-click="vm.mealMenuSubgroup = false">{{ 'web.meal.subgroup.' | aliasWithPrefix:'all' }}</a>
                                         </li>
                                         <li ng-repeat="(subgroupNum, subgroupCode) in vm.service.subgroups"
-                                            ng-class="{ active: vm.mealMenuSubgroup === subgroupNum }">
+                                            ng-class="['food__icon', 'food__icon--' + subgroupCode, { active: vm.mealMenuSubgroup === subgroupNum }]"
+                                            >
                                             <a href ng-click="vm.mealMenuSubgroup = subgroupNum">{{ 'web.meal.subgroup.' | aliasWithPrefix:subgroupCode }}</a>
                                         </li>
                                     </ul>
@@ -131,7 +132,7 @@
                                         <wrap ng-repeat="(subgroupNum, subgroup) in vm.mealMenu">
                                             <div ng-repeat="mealItem in subgroup"
                                                  ng-if=" vm.mealMenuSubgroup === subgroupNum || vm.mealMenuSubgroup === false "
-                                                 ng-class="{ active: mealItem.active, control_disabled: vm.locked }"
+                                                 ng-class="{ active: mealItem.active, control_disabled: vm.locked, 'item--alreadySelected': mealItem.alreadySelectedCount >= 1}"
                                                  class="item">
                                                 <div class="food_wrap">
                                                     <div class="img">

@@ -1,0 +1,78 @@
+@import 'variables'
+@import 'mixins'
+
+/* ==== redefine nordwind styles ==== */
+
+.passengersBlock_row-control-droporder-passenger-outer.active
+  background-color: $lightenPurpleBrandColor
+
+.passengersBlock_row-control-droporder-passenger-outer.active:after
+  border-left-color: $lightenPurpleBrandColor
+
+.passengersBlock_row-menu .list__i.isotopeGrid
+  display: flex
+  flex-flow: wrap row
+
+// item
+.passengersBlock_row-menu .list__i.isotopeGrid wrap,
+.passengersBlock_row-menu .item
+  flex: 50%
+
+.passengersBlock_row-control,
+.passengersBlock_row-menu
+  padding: 0 5px
+
+.passengersBlock_row-menu-foodSorting ul li.active a:before
+  background-image: $mealIconPurple
+
+.passengersBlock_row-menu .item.active .food_info:after
+  display: none
+
+.route geo-marker .geo-marker__es-seat, .geo-marker__es-meal
+  display: flex
+
+.passengersBlock_row-control-passengers.active
+  .passengersBlock_row-control-passengers-racenumber
+    @extend %text--highlight
+
+.passengersBlock_row-control-passengers-icon
+  display: none
+
+// remove racenumber icon
+.passengersBlock_row-control-passengers-racenumber
+  margin-left: 0
+
+.checkoutServices__i .list>.item.active .top
+  border-bottom: none
+
+/* ==== END redefine nordwind styles ==== */
+
+
+/* ==== blocks ==== */
+
+%button
+  padding: 10px 15px
+  background: $purpleBrandColor
+  outline: none
+  border: none
+  color: $white
+  font-weight: 700
+
+%text
+  &--highlight
+    color: $purpleBrandColor
+
+
+/* ==== END blocks ==== */
+
+.item
+  &__btn
+    @extend %button
+
+
+.dep__point
+  &_city
+    margin-right: 10px
+
+geo-marker .arr__point_city
+  margin-right: 10px
