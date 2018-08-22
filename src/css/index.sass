@@ -9,14 +9,24 @@
 .passengersBlock_row-control-droporder-passenger-outer.active:after
   border-left-color: $lightenPurpleBrandColor
 
-.passengersBlock_row-menu .list__i.isotopeGrid
+.passengersBlock_row-control-droporder-passenger-outer.active .passengersBlock_row-control-droporder-passenger-icon
+  background: $userIcon
+
+//.passengersBlock_row-menu .list__i.isotopeGrid
   display: flex
-  flex-flow: wrap row
 
 // item
-.passengersBlock_row-menu .list__i.isotopeGrid wrap,
+//.passengersBlock_row-menu .list__i.isotopeGrid wrap
+  display: flex
+  flex-wrap: wrap
+
 .passengersBlock_row-menu .item
-  flex: 50%
+  width: 50%
+  float: left
+
+.passengersBlock_row-menu .list__i.isotopeGrid wrap .item .food_wrap .img,
+.passengersBlock_row-menu .img img
+  max-width: 100%
 
 .passengersBlock_row-control,
 .passengersBlock_row-menu
@@ -57,17 +67,43 @@
   border: none
   color: $white
   font-weight: 700
+  &--disabled
+    cursor: not-allowed
+    opacity: 0.7
 
 %text
   &--highlight
     color: $purpleBrandColor
 
+.foodSelect
+  .item
+    $self: &
+
+    .img
+      position: relative
+
+    &__status-count
+      position: absolute
+      right: 10px
+      top: 10px
+      width: 25px
+      height: 25px
+      border-radius: 50%
+      text-align: center
+      line-height: 25px
+      background: $purpleBrandColor
+      color: $white
 
 /* ==== END blocks ==== */
 
+.item-meal
+  .top .price h3
+    display: none
 .item
   &__btn
     @extend %button
+    &.selected
+      @extend %button--disabled
 
 
 .dep__point
@@ -76,3 +112,11 @@
 
 geo-marker .arr__point_city
   margin-right: 10px
+
+.food_info
+  .name
+    font-size: 1.3em
+  .price
+    padding-bottom: 10px
+  .description
+    padding-bottom: 10px
