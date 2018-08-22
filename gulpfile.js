@@ -32,7 +32,7 @@
                     return url.replace('src/', '');
                 }
             }))
-            .pipe(concat("templates-nordstar-test.js"))
+            .pipe(concat("templates-nordstar.js"))
             .pipe(uglify())
             .pipe(gulp.dest('build/'));
     });
@@ -52,7 +52,7 @@
     gulp.task('build:js', function () {
         return browserify('src/index.js', { transform: strictify })
             .bundle()
-            .pipe(source('controllers-nordstar-test.js'))
+            .pipe(source('controllers-nordstar.js'))
             .pipe(buffer())
             .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(uglify())
