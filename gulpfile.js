@@ -49,23 +49,12 @@
             .pipe(gulp.dest('build/index.css/'));
     });
 
-    gulp.task('build:js', function () {
-        return browserify('src/index.js', { transform: strictify })
-            .bundle()
-            .pipe(source('controllers-nordstar.js'))
-            .pipe(buffer())
-            .pipe(sourcemaps.init({loadMaps: true}))
-            .pipe(uglify())
-            .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest('build/'));
-    });
-
 
     gulp.task('watch', function() {
-        gulp.watch('src/**/*.*', gulp.series('build:html', 'build:css', 'build:js'));
+        gulp.watch('src/**/*.*', gulp.series('build:html', 'build:css'));
     });
 
-    gulp.task('build', gulp.series('build:html', 'build:css', 'build:js'));
+    gulp.task('build', gulp.series('build:html', 'build:css'));
 
     gulp.task('default', gulp.series('build', 'watch'));
 
