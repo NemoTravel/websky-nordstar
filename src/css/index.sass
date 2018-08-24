@@ -96,9 +96,6 @@
 
 /* ==== END blocks ==== */
 
-.item-meal
-  .top .price h3
-    display: none
 .item
   &__btn
     @extend %button
@@ -120,3 +117,23 @@ geo-marker .arr__point_city
     padding-bottom: 10px
   .description
     padding-bottom: 10px
+
+.foodSelect
+  tr.contentRow
+    td:not(.firstCol)
+      //background-color: #000000
+      //height: 67px
+      width: 500px
+
+.checkoutServices__i .drop_mobile .passengersTable .firstCol
+  height: 67px
+  width: 150px
+
+.checkoutServices__i .drop_mobile .passengersTable .contentRow td:not(.firstCol)
+  height: 67px
+
+.checkoutServices__i .drop_mobile .passengersTableContainer
+  padding-left: 120px
+
+.checkoutServices__i .drop_mobile .passengersTable .headRow td:not(.firstCol):not(.lastCol)
+  width: 300px

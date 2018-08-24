@@ -31,11 +31,6 @@
                         </div>
                     </td>
                     <td>
-                        <div ng-if="vm.service.active && vm.service.editablePrice" class="price">
-                            <div class="price__i">
-                                <h3 ng-bind-html="{ value: vm.service.editablePrice.price, currency: vm.service.editablePrice.currency } | price"></h3>
-                            </div>
-                        </div>
                         <div ng-if="!vm.service.active && vm.service.minPrice" class="price">
                             <div class="price__i">
                                 <p>
@@ -221,11 +216,6 @@
             </a>
             <div class="row">
                 <a href>
-                    <div ng-if="vm.service.active && vm.service.editablePrice" class="price">
-                        <div class="price__i">
-                            <h3 ng-bind-html="{ value: vm.service.editablePrice.price, currency: vm.service.editablePrice.currency } | price"></h3>
-                        </div>
-                    </div>
                     <div ng-if="!vm.service.active && vm.service.minPrice" class="price">
                         <div class="price__i">
                             <p>
