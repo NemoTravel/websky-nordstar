@@ -1,1 +1,1 @@
-require('./directives/mealLimitation');
+// require('./directives/blockMealAdd');
