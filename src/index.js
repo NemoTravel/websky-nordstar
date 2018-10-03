@@ -1,1 +1,1 @@
-// require('./directives/blockMealAdd');
+require('./directives/restrictSelectMeal');
