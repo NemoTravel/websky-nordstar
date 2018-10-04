@@ -67,7 +67,7 @@
                 <div class="foodSelect__i">
 
                     <div class="passengersBlock" restrict-meal-select restrict-count="2" order-info="vm.orderInfo"
-                         meal-menu="vm.MealMenu" service="vm.service">
+                         meal-menu="vm.mealMenu" service="vm.service">
                         <div class="passengersBlock_row">
                             <div class="passengersBlock_row-control">
                                 <div class="passengersBlock_row-control-outer"
@@ -175,22 +175,21 @@
 
                                                         <button class="item__btn"
                                                                 ng-click="vm.mealCountChangeHandler(subgroupNum, mealItem, +1)"
-                                                                ng-if="mealItem.alreadySelectedCount < 1">
+                                                                ng-if="mealItem.alreadySelectedCount < 1 && !mealItem.restrictSelect">
                                                             {{ 'web.extraServices.meal.choose' | aliasStatic}}
                                                         </button>
 
                                                         <button class="item__btn"
                                                                 ng-click="vm.mealCountChangeHandler(subgroupNum, mealItem, +1)"
-                                                                ng-if="mealItem.alreadySelectedCount > 0 && mealItem.alreadySelectedCount !== mealItem.limit">
+                                                                ng-if="mealItem.alreadySelectedCount > 0 && mealItem.alreadySelectedCount !== mealItem.limit && !mealItem.restrictSelect">
                                                             {{ 'web.extraServices.meal.addAnother' | aliasStatic}}
                                                         </button>
 
                                                         <button class="item__btn"
-                                                                ng-class="{selected: mealItem.alreadySelectedCount == mealItem.limit}"
-                                                                ng-if="mealItem.alreadySelectedCount == mealItem.limit">
+                                                                ng-class="{selected: mealItem.alreadySelectedCount == mealItem.limit || mealItem.restrictSelect }"
+                                                                ng-if="mealItem.alreadySelectedCount == mealItem.limit || mealItem.restrictSelect">
                                                             {{ 'web.extraServices.meal.selected' | aliasStatic}}
                                                         </button>
-
                                                     </div>
                                                 </div>
                                             </div>
