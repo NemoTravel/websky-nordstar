@@ -8,18 +8,33 @@
         <div class="wrap">
             <div class="searchSteps__i">
                 <ol>
-                    <li class="prev"><a href="{{ 'site.mainPageUrl' | param }}">{{ 'web.steps.search' | aliasStatic}}</a></li>
-                    <li class="prev"><a href="#{{$root.ROUTES.SEARCH}}">{{ 'web.steps.selectVariant' | aliasStatic}}</a></li>
-                    <li class="active">
-                        {{ (vm.passengers.length == 1) ? ( 'web.steps.passenger' | aliasStatic) : ( 'web.steps.passengers' | aliasStatic) }}
-                    </li>
-                    <li>{{ 'web.steps.extraServices' | aliasStatic}}</li>
-                    <li>{{ 'web.steps.payment' | aliasStatic}}</li>
-                    <li>{{ 'web.steps.order' | aliasStatic}}</li>
-                </ol>
-            </div>
-        </div>
+          <li class="prev">
+            <a href="{{ 'web.site.firstStepUrl' | aliasStatic }}">
+              {{ 'web.steps.search' | aliasStatic}}
+            </a>
+          </li>
+          <li class="prev">
+            <a href="#{{$root.ROUTES.SEARCH}}">
+              {{ 'web.steps.selectVariant' | aliasStatic}}
+            </a>
+          </li>
+          <li class="active">
+            {{ (vm.passengers.length == 1) ? ( 'web.steps.passenger' | aliasStatic) :
+            ( 'web.steps.passengers' | aliasStatic) }}
+          </li>
+          <li>
+            {{ 'web.steps.extraServices' | aliasStatic}}
+          </li>
+          <li>
+            {{ 'web.steps.payment' | aliasStatic}}
+          </li>
+          <li>
+            {{ 'web.steps.order' | aliasStatic}}
+          </li>
+        </ol>
+      </div>
     </div>
+  </div>
 
 
 	<div ng-if="vm.orderInfo && vm.passengersCheck" class="searchParams searchParams_passengers">
@@ -50,7 +65,13 @@
                             {{ (vm.passengers.length == 1) ? ( 'web.passengerInfo.header' | aliasStatic) : ( 'web.passengersInfo.header' | aliasStatic) }}
                         </h2>
 
-                        <p ng-if="vm.passengersCheck.isLatinNamesOnly && !('site.foreignSite' | param)" class="intAttention">
+            <div ng-repeat="alertMessage in vm.alertMessages" class="infoMessage infoMessage_error">
+              <div class="infoMessage__i">
+                <p ng-bind-html=" alertMessage | aliasDynamic "></p>
+              </div>
+            </div>
+
+            <p class="intAttention" ng-if="vm.passengersCheck.isLatinNamesOnly && !('site.foreignSite' | param)">
                             {{ 'web.messages.passNamesLabel' | aliasStatic}}
                             <span ng-bind-html=" 'web.messages.passNamesLatin' | aliasStatic"></span>
                         </p>
@@ -104,6 +125,8 @@
 													<div class="inp inp-animate-outer">
 														<error-message
 															control="vm.passengerForms[passengerNumber].lastName"
+                                  format-alias="passenger.documentType == 'PSP' ? 'web.messages.pspFormatName' :
+                                  'web.messages.format'"
 															touched="vm.submitTouched">
 														</error-message>
 														<input type="text"
@@ -124,6 +147,8 @@
 													<div class="inp inp-animate-outer">
 														<error-message
 															control="vm.passengerForms[passengerNumber].firstName"
+                                  format-alias="passenger.documentType == 'PSP' ? 'web.messages.pspFormatName' :
+                                  'web.messages.format'"
 															touched="vm.submitTouched">
 														</error-message>
 														<input type="text"
@@ -250,7 +275,7 @@
 												</td>
 
 												<td>
-													<div class="inp inp-animate-outer"
+													<div class="inp inp-animate-outer">
 														<error-message
 															control="vm.passengerForms[passengerNumber].documentNumber"
 															touched="vm.submitTouched">
@@ -277,6 +302,9 @@
 												</td>
 												<td>
 													<div class="inp inp-animate-outer" ng-if="vm.getExpiryByDocType(passenger.documentType, passenger.categoryCode)">
+                          <label class="inp-label">
+                            {{ 'web.passengersInfo.label.documentDate' | aliasStatic}}
+                          </label>
 														<error-message
 															control="vm.passengerForms[passengerNumber].documentDate"
 															touched="vm.submitTouched">
@@ -293,14 +321,64 @@
 															error-highlight="{{vm.submitTouched}}"
                                                             ui-mask="99.99.9999"
                                                             model-view-value="true"
+                                 placeholder="{{ 'web.passengersInfo.documentDate' | aliasStatic}}"
                                                             ui-mask-placeholder="{{ 'web.datePattern' | aliasStatic}}">
+                                 prevent-browser-suggestions />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr ng-if="vm.passengersRulesByNum[passengerNumber].additionalDocuments">
+                      <td>
+                        <div class="inp">
 														<label class="inp-animate-label">
 															<span>{{ 'web.passengersInfo.documentDate' | aliasStatic}}</span>
 														</label>
-													</div>
-												</td>
-											</tr>
+                          <error-message
+                                  control="vm.passengerForms[passengerNumber].additionalDocumentType"
+                                  touched="vm.submitTouched">
+                          </error-message>
+                          <ui-select ng-model="passenger.additionalDocumentType"
+                                     name="additionalDocumentType"
+                                     theme="selectize"
+                                     search-enabled="false"
+                                     class="ui-select-custom ui-select-passengers"
+                                     ui-select-custom
+                                     error-highlight="{{vm.submitTouched}}"
+                                     required>
+                            <ui-select-match placeholder="{{$select.selected.name ||
+                                    ( 'web.passengersInfo.additionalDocumentType' | aliasStatic) }}">
+                              {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="doc.code as doc in
+                            vm.passengersRulesByNum[passengerNumber].additionalDocuments">
+                              <div class="{{ 'documentTypeOption_' + doc.code }}" ng-bind-html="doc.name"></div>
+                            </ui-select-choices>
+                          </ui-select>
+                        </div>
+                      </td>
 
+                      <td>
+                        <div class="inp">
+                          <label class="inp-label">
+                            {{ 'web.passengersInfo.label.additionalDocumentNumber' | aliasStatic}}
+                          </label>
+                          <error-message
+                                  control="vm.passengerForms[passengerNumber].additionalDocumentNumber"
+                                  touched="vm.submitTouched">
+                          </error-message>
+                          <input type="text"
+                                 name="additionalDocumentNumber"
+                                 ng-model="passenger.additionalDocumentNumber"
+                                 required
+                                 class="textInp"
+                                 error-highlight="{{vm.submitTouched}}"
+                                 placeholder="{{ 'web.passengersInfo.additionalDocumentNumber' | aliasStatic}}"
+                                 prevent-browser-suggestions/>
+                        </div>
+                      </td>
+                      <td class="mobileHide"></td>
+                      <td class="mobileHide"></td>
+                    </tr>
 											<tr ng-if="(passenger.categoryCode == 'AAA' || passenger.categoryCode == 'CPA' || passenger.categoryCode == 'MLA') && (vm.passengersCheck.allowEmail || vm.passengersCheck.allowPhone)">
 												<td>
 													<div class="inp inp-animate-outer" ng-if="vm.passengersCheck.allowPhone">
